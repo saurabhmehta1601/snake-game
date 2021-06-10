@@ -1,3 +1,5 @@
+export enum DIRECTIONS { TOP,RIGHT,LEFT,BOTTOM }
+
 export type data ={
     col :number ,
     row:number ,

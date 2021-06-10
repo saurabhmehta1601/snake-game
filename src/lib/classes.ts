@@ -7,10 +7,10 @@ export class LinkedListNode{
     }
 }
 
-export class DoublyLinkedList {
+export class LinkedList {
     head :LinkedListNode
     tail :LinkedListNode
-    
+
     constructor(value : data){
         this.head = new LinkedListNode(value)
         this.tail =   new LinkedListNode(value)
