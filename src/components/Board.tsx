@@ -7,7 +7,7 @@ import GameOver from "./GameOver"
 const Board = ({row,col} : boardProps) => {
     const board = generateBoard(row,col)
     const [gameOver,setGameOver] = useState(false)
-    const [speed,setSpeed] = useState<number  | null >(650)
+    const [speed,setSpeed] = useState<number  | null >(250)
 
     const [head,setHead] = useState(getSnakeInitialPosition(board))
     const [tail,setTail] = useState(getSnakeInitialPosition(board))

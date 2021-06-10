@@ -107,13 +107,13 @@ export const getNextTail = (prevTail : {row:number,col:number} , snakeCells :any
   if(row + 1 < MAX_ROWS && snakeCells.has(board[row + 1][col])){
     return { row : row + 1 ,col ,cell : board[row+1][col] }
     }
-  else if(row - 1 > 0 && snakeCells.has(board[row - 1 ][col])){
+  else if(row - 1 >= 0 && snakeCells.has(board[row - 1 ][col])){
     return {row : row - 1 ,col ,cell : board[row -  1][col] }
   }
   else if(col + 1 < MAX_COLS && snakeCells.has(board[row  ][col + 1])){
     return {row : row  ,col: col  + 1, cell : board[row][col + 1] }
   }
-  else if(col - 1 > 0 && snakeCells.has(board[row  ][col - 1 ])){
+  else if(col - 1 >= 0 && snakeCells.has(board[row  ][col - 1 ])){
     return {row : row  ,col : col - 1,cell : board[row][col -1] }
   }
   return  { row,col , cell :board[row][col]}
