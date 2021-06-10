@@ -1,12 +1,11 @@
-import React from 'react'
-
-
-
+// @ts-ignore
+import Test from "@/components/Test"
 
 const Board = () => {
     return (
         <div>
-            My board
+            Board
+            <Test />
         </div>
     )
 }
