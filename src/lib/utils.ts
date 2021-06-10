@@ -79,3 +79,22 @@ else if(direction === DIRECTIONS.BOTTOM){
  return { row,col,cell }
 }
 }
+
+export const getNextTail = (prevTail : {row:number,col:number} , snakeCells :any,board : Array<Array<number>>) : any =>{
+  
+  const {row,col}  = prevTail
+  if(snakeCells.has(board[row + 1][col])){
+    return { row : row + 1 ,col ,cell : board[row+1][col] }
+    }
+  else if(snakeCells.has(board[row - 1 ][col])){
+    return {row : row - 1 ,col ,cell : board[row -  1][col] }
+  }
+  else if(snakeCells.has(board[row  ][col + 1])){
+    return {row : row  ,col: col  + 1, cell : board[row][col + 1] }
+  }
+  else if(snakeCells.has(board[row  ][col - 1 ])){
+    return {row : row  ,col : col - 1,cell : board[row][col -1] }
+  }
+
+}
+  
