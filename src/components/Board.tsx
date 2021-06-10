@@ -7,6 +7,7 @@ import GameOver from "./GameOver"
 const Board = ({row,col} : boardProps) => {
     const board = generateBoard(row,col)
     const [gameOver,setGameOver] = useState(false)
+    const [speed,setSpeed] = useState<number  | null >(650)
 
     const [head,setHead] = useState(getSnakeInitialPosition(board))
     const [tail,setTail] = useState(getSnakeInitialPosition(board))
@@ -18,18 +19,22 @@ const Board = ({row,col} : boardProps) => {
         console.log(head,tail)
         // finding next position of head based on direction and then add new head to snake cells 
         const currentHead = { row:head.row , col : head.col }
-        const currentTail = { row:tail.row , col : tail.col }
+
+        
         const nextHead = getNextHead( currentHead , direction ,board)
+        // when next is null because snake out of board
+        if(!nextHead) {
+            setGameOver(true)
+            setSpeed(null)
+            return
+        }
+        const currentTail = { row:tail.row , col : tail.col }
         // if snake bites itself game over
         if(snakeCells.has(nextHead.cell)){
             setGameOver(true) 
             return 
         }
-        // if snake getsOut of board again game over
-        if(head.row < 0 || head.row >= board.length || head.col < 0 || head.col >= board[0].length){
-            setGameOver(true)
-            return
-        }  
+        
         // update then new head of snake
         setHead(nextHead)
         
@@ -62,7 +67,13 @@ const Board = ({row,col} : boardProps) => {
             window.addEventListener("keydown",handleKeyPress)
             return () => {window.removeEventListener("keydown",handleKeyPress) }
         },[])    
-        useInterval(() => moveSnake(direction) ,500)
+
+        
+
+        // this will stop when delay is null here delay is speed so on gameover I will set speed to null
+        useInterval(() => {
+            moveSnake(direction) 
+        },speed)
 
     return (
         <>

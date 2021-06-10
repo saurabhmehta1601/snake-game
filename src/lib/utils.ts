@@ -26,7 +26,7 @@ export const getSnakeInitialPosition = (board : Array<Array<number>>) : data =>{
 }
 
 // Copied from https://overreacted.io/making-setinterval-declarative-with-react-hooks/
-export function useInterval(callback : () =>void  , delay : number) {
+export function useInterval(callback : () =>void  , delay : number | null) {
     const savedCallback = useRef<() =>void>(callback);
   
     // Remember the latest callback.
@@ -57,27 +57,41 @@ export const snakeBitesItself = (nextHeadCell : number, snakeCells : any) =>{
 }
 
 export const getNextHead = (prevHead : {row: number,col: number}, direction : DIRECTIONS,board: Array<Array<number>>)  : any=>{
+ 
+   const MAX_ROWS = board.length
+   const MAX_COLS = board[0].length
 
   if(direction === DIRECTIONS.RIGHT){
-       const row = prevHead.row
-       const col  = prevHead.col + 1 
-       const cell = board[row][col]
+    const col  = prevHead.col + 1
+    if(col >=MAX_COLS ) return  null
+    
+    const row = prevHead.row
+    
+      const cell = board[row][col]
       return { row,col,cell }
   }
   else if(direction === DIRECTIONS.LEFT){
-    const row = prevHead.row
     const col  = prevHead.col - 1 
+    if(col < 0 ) return null   
+    
+    
+    const row = prevHead.row
     const cell = board[row][col]
-   return { row,col,cell }
+    return { row,col,cell }
 }
 else if(direction === DIRECTIONS.TOP){
   const row = prevHead.row - 1
+  if(row < 0 ) return null   
+  
   const col  = prevHead.col  
   const cell = board[row][col]
  return { row,col,cell }
 }
 else if(direction === DIRECTIONS.BOTTOM){
   const row = prevHead.row + 1
+  if(row >= MAX_ROWS ) return null   
+  
+  
   const col  = prevHead.col  
   const cell = board[row][col]
  return { row,col,cell }
@@ -85,19 +99,23 @@ else if(direction === DIRECTIONS.BOTTOM){
 }
 
 export const getNextTail = (prevTail : {row:number,col:number} , snakeCells :any,board : Array<Array<number>>) : any =>{
-  
+  const MAX_ROWS = board.length
+  const MAX_COLS  = board[0].length
+
   const {row,col}  = prevTail
-  if(snakeCells.has(board[row + 1][col])){
+ 
+  if(row + 1 < MAX_ROWS && snakeCells.has(board[row + 1][col])){
     return { row : row + 1 ,col ,cell : board[row+1][col] }
     }
-  else if(snakeCells.has(board[row - 1 ][col])){
+  else if(row - 1 > 0 && snakeCells.has(board[row - 1 ][col])){
     return {row : row - 1 ,col ,cell : board[row -  1][col] }
   }
-  else if(snakeCells.has(board[row  ][col + 1])){
+  else if(col + 1 < MAX_COLS && snakeCells.has(board[row  ][col + 1])){
     return {row : row  ,col: col  + 1, cell : board[row][col + 1] }
   }
-  else if(snakeCells.has(board[row  ][col - 1 ])){
+  else if(col - 1 > 0 && snakeCells.has(board[row  ][col - 1 ])){
     return {row : row  ,col : col - 1,cell : board[row][col -1] }
   }
+  return  { row,col , cell :board[row][col]}
 }
 
