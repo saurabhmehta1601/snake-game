@@ -100,3 +100,4 @@ export const getNextTail = (prevTail : {row:number,col:number} , snakeCells :any
     return {row : row  ,col : col - 1,cell : board[row][col -1] }
   }
 }
+

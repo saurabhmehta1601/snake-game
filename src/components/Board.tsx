@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {boardProps,DIRECTIONS} from "../lib/types"
 import { generateBoard, getSnakeInitialPosition, useInterval , getNextHead, getNextTail } from '../lib/utils'
 import GameOver from "./GameOver"
@@ -42,8 +42,26 @@ const Board = ({row,col} : boardProps) => {
         // update snakecells
         setSnakeCells(newSnakeCells)
     }
-
-    
+    const handleKeyPress = (e : any) =>{
+        switch(e.key){
+            case "ArrowRight" : 
+                setDirection(DIRECTIONS.RIGHT)
+                break 
+            case "ArrowLeft" : 
+            setDirection(DIRECTIONS.LEFT)
+                break 
+            case "ArrowUp" : 
+            setDirection(DIRECTIONS.TOP)
+                break 
+            case "ArrowDown" : 
+            setDirection(DIRECTIONS.BOTTOM)
+                break 
+        }
+    }
+        useEffect(() =>{
+            window.addEventListener("keydown",handleKeyPress)
+            return () => {window.removeEventListener("keydown",handleKeyPress) }
+        },[])    
         useInterval(() => moveSnake(direction) ,500)
 
     return (
