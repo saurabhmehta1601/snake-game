@@ -52,6 +52,10 @@ export const isSnakeOutOfBoard = (coords:  {row:number,col:number},board: Array<
   return false ;
 }
 
+export const snakeBitesItself = (nextHeadCell : number, snakeCells : any) =>{
+  return snakeCells.has(nextHeadCell)
+}
+
 export const getNextHead = (prevHead : {row: number,col: number}, direction : DIRECTIONS,board: Array<Array<number>>)  : any=>{
 
   if(direction === DIRECTIONS.RIGHT){
@@ -95,6 +99,4 @@ export const getNextTail = (prevTail : {row:number,col:number} , snakeCells :any
   else if(snakeCells.has(board[row  ][col - 1 ])){
     return {row : row  ,col : col - 1,cell : board[row][col -1] }
   }
-
 }
-  
