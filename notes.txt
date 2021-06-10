@@ -1,0 +1,21 @@
+    - [x] Make grid
+
+    - [] Make Snake
+        - [x] Render Snake at initial position
+        - [x] Store snakeCells in set 
+        - [] Implement snake using linkedList
+    
+    - [] Snake Movements
+        - [] implement setInterval for automatic snake movement
+        - [] move snake of length 1
+        - [] move snake of length >  1
+        - [] Change snake direction on keypress
+
+    - [] Handle GameOver
+        - [] Handle snake going out of bounds
+        - [] Handle snake eating itself
+
+    - [] Make Food
+        - []  Render food on board 
+        - []  Handle snake growth  
+    

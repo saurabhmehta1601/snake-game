@@ -1,9 +1,10 @@
+import Board from "./components/Board"
 
 const App = () => {
    
     return (
        <>
-           hello world
+            <Board row={15} col={15} />
        </>
     )
 }
