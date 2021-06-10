@@ -43,7 +43,13 @@ body{
 }
 
 .game-over {
-    height : 300px ;
+    height : 250px ;
+    display:grid ;
+    border-radius: 4px;
+    place-items:center ;
+    font-size:2rem ;
     width : 400px ;
+    color:black ;
     margin: 100px auto ;
+    background-color:rgb(197, 186, 186) ;
 }

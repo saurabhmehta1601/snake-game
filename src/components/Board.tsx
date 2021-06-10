@@ -41,9 +41,8 @@ const Board = ({row,col} : boardProps) => {
         setTail(getNextTail(currentTail,snakeCells,board))
         // update snakecells
         setSnakeCells(newSnakeCells)
-
     }
-    
+
     
         useInterval(() => moveSnake(direction) ,500)
 
