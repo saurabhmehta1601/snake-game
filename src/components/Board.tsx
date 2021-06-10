@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import {boardProps,DIRECTIONS} from "../lib/types"
-import { generateBoard, getSnakeInitialPosition, useInterval , getNextHead, getNextTail } from '../lib/utils'
+import { generateBoard, getSnakeInitialPosition, useInterval , getNextHead, getNextTail , getRandomFoodPosition } from '../lib/utils'
 import GameOver from "./GameOver"
 
 
@@ -9,10 +9,12 @@ const Board = ({row,col} : boardProps) => {
     const [gameOver,setGameOver] = useState(false)
     const [speed,setSpeed] = useState<number  | null >(250)
 
+    const [snakeCells,setSnakeCells] = useState(new Set([getSnakeInitialPosition(board).cell]))
+    const [foodCell,setFoodCell] = useState(getRandomFoodPosition(board,snakeCells))
+
     const [head,setHead] = useState(getSnakeInitialPosition(board))
     const [tail,setTail] = useState(getSnakeInitialPosition(board))
 
-    const [snakeCells,setSnakeCells] = useState(new Set([getSnakeInitialPosition(board).cell]))
     const [direction,setDirection] = useState( DIRECTIONS.RIGHT )
 
     const moveSnake = (direction : DIRECTIONS) =>{
@@ -68,8 +70,6 @@ const Board = ({row,col} : boardProps) => {
             return () => {window.removeEventListener("keydown",handleKeyPress) }
         },[])    
 
-        
-
         // this will stop when delay is null here delay is speed so on gameover I will set speed to null
         useInterval(() => {
             moveSnake(direction) 
@@ -81,7 +81,7 @@ const Board = ({row,col} : boardProps) => {
            {board.map((row,idx) =>{
                return <div key={idx} className="row"> 
                     {row.map(col =>{
-                        return <div data-id={col} key= {col} className={snakeCells.has(col) ?  "cell snake" : "cell" } ></div>
+                        return <div data-id={col} key= {col} className={snakeCells.has(col) ?  "cell snake" : col===foodCell ? "cell food" : "cell" } ></div>
                     })}
                </div>
            })}

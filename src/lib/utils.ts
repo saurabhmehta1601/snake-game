@@ -119,3 +119,17 @@ export const getNextTail = (prevTail : {row:number,col:number} , snakeCells :any
   return  { row,col , cell :board[row][col]}
 }
 
+export const getRandomFoodPosition = (board : Array<Array<number>>,snakeCells : any) =>{
+  const MAX_ROWS = board.length
+  const MAX_COLS = board[0].length
+
+  while(true){
+    const randomRow = Math.floor(Math.random() * MAX_ROWS)
+    const randomCol = Math.floor(Math.random() * MAX_COLS)
+    const foodCell = board[randomRow][randomCol] 
+    if(!snakeCells.has(foodCell)){
+        return  foodCell
+    }
+  }
+
+}
