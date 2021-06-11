@@ -98,36 +98,16 @@ else if(direction === DIRECTIONS.BOTTOM){
 }
 }
 
-export const getNextTail = (prevTail : {row:number,col:number} , snakeCells :any,board : Array<Array<number>>) : any =>{
-  const MAX_ROWS = board.length
-  const MAX_COLS  = board[0].length
-
-  const {row,col}  = prevTail
- 
-  if(row + 1 < MAX_ROWS && snakeCells.has(board[row + 1][col])){
-    return { row : row + 1 ,col ,cell : board[row+1][col] }
-    }
-  else if(row - 1 >= 0 && snakeCells.has(board[row - 1 ][col])){
-    return {row : row - 1 ,col ,cell : board[row -  1][col] }
-  }
-  else if(col + 1 < MAX_COLS && snakeCells.has(board[row  ][col + 1])){
-    return {row : row  ,col: col  + 1, cell : board[row][col + 1] }
-  }
-  else if(col - 1 >= 0 && snakeCells.has(board[row  ][col - 1 ])){
-    return {row : row  ,col : col - 1,cell : board[row][col -1] }
-  }
-  return  { row,col , cell :board[row][col]}
-}
 
 export const getRandomFoodPosition = (board : Array<Array<number>>,snakeCells : any) =>{
   const MAX_ROWS = board.length
-  const MAX_COLS = board[0].length
+  const MAX_COLS =  board[0].length
 
   while(true){
     const randomRow = Math.floor(Math.random() * MAX_ROWS)
     const randomCol = Math.floor(Math.random() * MAX_COLS)
     const foodCell = board[randomRow][randomCol] 
-    if(!snakeCells.has(foodCell)){
+    if(!snakeCells.includes(foodCell)){
         return  foodCell
     }
   }
