@@ -18,10 +18,8 @@ const Board = ({row,col} : boardProps) => {
     const [direction,setDirection] = useState( DIRECTIONS.RIGHT )
 
     const moveSnake = (direction : DIRECTIONS) =>{
-        console.log(head,tail)
         // finding next position of head based on direction and then add new head to snake cells 
         const currentHead = { row:head.row , col : head.col }
-
         
         const nextHead = getNextHead( currentHead , direction ,board)
         // when next is null because snake out of board
@@ -40,16 +38,24 @@ const Board = ({row,col} : boardProps) => {
         // update then new head of snake
         setHead(nextHead)
         
-        const newSnakeCells = snakeCells
-        // remove old tail from cells 
-        newSnakeCells.delete(tail.cell)
+        const newSnakeCells = snakeCells //modify this set to get new snake cell positions
+        // add new head to snakecells
         newSnakeCells.add(nextHead.cell)
-        // update tail of snake
-        setTail(getNextTail(currentTail,snakeCells,board))
+        
+        // handle case when snake does not eats  food
+        if(head.cell !== foodCell){
+            // remove old tail from cells 
+            newSnakeCells.delete(tail.cell)
+            // update tail of snake
+            setTail(getNextTail(currentTail,snakeCells,board))
+        }else{
+            setFoodCell(getRandomFoodPosition(board,snakeCells))
+        }
+
         // update snakecells
         setSnakeCells(newSnakeCells)
     }
-    const handleKeyPress = (e : any) =>{
+    const handleKeyPress = (e : KeyboardEvent) =>{
         switch(e.key){
             case "ArrowRight" : 
                 setDirection(DIRECTIONS.RIGHT)
