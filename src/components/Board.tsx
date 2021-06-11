@@ -60,28 +60,27 @@ const Board = ({row,col} : boardProps) => {
         // update snakecells
         setSnakeCells(newSnakeCells) 
     }
-    const handleKeyPress = (e : KeyboardEvent) =>{
-        switch(e.key){
-            case "ArrowRight" : 
-                if(!(direction === DIRECTIONS.LEFT && snakeCells.length > 1))
-                setDirection(DIRECTIONS.RIGHT)
-                break 
-            case "ArrowLeft" : 
-            if(!(direction === DIRECTIONS.RIGHT && snakeCells.length > 1))
-                setDirection(DIRECTIONS.LEFT)
-                break 
-            case "ArrowUp" :
-                setDirection(DIRECTIONS.TOP)
-                break 
-            case "ArrowDown" : 
-                setDirection(DIRECTIONS.BOTTOM)
-                break 
-        }
-    }
         useEffect(() =>{
+            const handleKeyPress = (e : KeyboardEvent) =>{
+                switch(e.key){
+                    case "ArrowRight" : 
+                        setDirection(DIRECTIONS.RIGHT)
+                        break 
+                    case "ArrowLeft" : 
+                        setDirection(DIRECTIONS.LEFT)
+                        break 
+                    case "ArrowUp" :
+                        setDirection(DIRECTIONS.TOP)
+                        break 
+                    case "ArrowDown" : 
+                        setDirection(DIRECTIONS.BOTTOM)
+                        break 
+                }
+            }
+            
             window.addEventListener("keydown",handleKeyPress)
             return () => {window.removeEventListener("keydown",handleKeyPress) }
-        },[handleKeyPress])    
+        },[])    
 
         // this will stop when delay is null here delay is speed so on gameover I will set speed to null
         useInterval(() => {
