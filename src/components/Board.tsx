@@ -6,7 +6,8 @@ import GameOver from "./GameOver"
 
 const Board = ({row,col} : boardProps) => {
     const board = generateBoard(row,col)
-    const [gameOver,setGameOver] = useState(false)
+    const [gameOver,setGameOver] = useState<boolean>(false)
+    const [score,setScore] = useState<number>(0)
     const [speed,setSpeed] = useState<number  | null >(250)
 
     const [snakeCells,setSnakeCells] = useState(new Set([getSnakeInitialPosition(board).cell]))
@@ -19,7 +20,7 @@ const Board = ({row,col} : boardProps) => {
 
     const moveSnake = (direction : DIRECTIONS) =>{
         // finding next position of head based on direction and then add new head to snake cells 
-        const currentHead = { row:head.row , col : head.col }
+        const currentHead = { row: head.row , col : head.col }
         
         const nextHead = getNextHead( currentHead , direction ,board)
         // when next is null because snake out of board
@@ -28,7 +29,7 @@ const Board = ({row,col} : boardProps) => {
             setSpeed(null)
             return
         }
-        const currentTail = { row:tail.row , col : tail.col }
+        const currentTail = { row: tail.row , col : tail.col }
         // if snake bites itself game over
         if(snakeCells.has(nextHead.cell)){
             setGameOver(true) 
@@ -49,11 +50,13 @@ const Board = ({row,col} : boardProps) => {
             // update tail of snake
             setTail(getNextTail(currentTail,snakeCells,board))
         }else{
+            // when snake eats the food
             setFoodCell(getRandomFoodPosition(board,snakeCells))
+            setScore(score + 1)
         }
 
         // update snakecells
-        setSnakeCells(newSnakeCells)
+        setSnakeCells(newSnakeCells) 
     }
     const handleKeyPress = (e : KeyboardEvent) =>{
         switch(e.key){
@@ -83,7 +86,10 @@ const Board = ({row,col} : boardProps) => {
 
     return (
         <>
-       {gameOver ?  <GameOver />:  <div className="board">
+       {gameOver ?  <GameOver />:  
+       <>
+       <h2 className="score">Your score : {score}</h2>
+       <div className="board">
            {board.map((row,idx) =>{
                return <div key={idx} className="row"> 
                     {row.map(col =>{
@@ -91,7 +97,8 @@ const Board = ({row,col} : boardProps) => {
                     })}
                </div>
            })}
-        </div>}
+        </div>
+        </>}
         </>
     )
 }
