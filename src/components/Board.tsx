@@ -81,7 +81,7 @@ const Board = ({row,col} : boardProps) => {
         useEffect(() =>{
             window.addEventListener("keydown",handleKeyPress)
             return () => {window.removeEventListener("keydown",handleKeyPress) }
-        },[])    
+        },[handleKeyPress])    
 
         // this will stop when delay is null here delay is speed so on gameover I will set speed to null
         useInterval(() => {
